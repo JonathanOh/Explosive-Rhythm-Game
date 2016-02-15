@@ -13,7 +13,7 @@ class PlayerSprite {
 
     private var _playerSpeed : Double = 100
     private var _playerSprite = SKSpriteNode(imageNamed: "Spaceship")
-    private var _playerSize = CGSize(width: 20, height: 20)
+    private var _playerSize = CGSize(width: 50, height: 50)
     
     var playerSpeed : Double {
         get {
@@ -40,8 +40,8 @@ class PlayerSprite {
     
     init(parentFrame : CGRect) {
         //Initializing player speed and size relative to screen size for consistent game play experience
-        _playerSpeed = Double(parentFrame.width)/10.0
-        _playerSprite.size = CGSize(width: Double(parentFrame.width)/51.0, height: Double(parentFrame.width)/51.0)
+        _playerSpeed = Double(parentFrame.width)/4
+        _playerSprite.size = CGSize(width: Double(parentFrame.width)/21.0, height: Double(parentFrame.width)/21.0)
         _playerSprite.position = CGPointMake(parentFrame.width/2, parentFrame.height/10)
     }
 

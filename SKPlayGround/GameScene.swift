@@ -10,29 +10,59 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    //This variable is used to prvide better UX.  Will need a better solution.
+    //touchesBeganCounter is used to provide smoother player controls.  Will need a better solution.
     var touchesBeganCounter = 0
-    var lilSpacey : PlayerSprite!
+    var currentPlayer : PlayerSprite!
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
         self.backgroundColor = SKColor.whiteColor()
         
-        lilSpacey = PlayerSprite(parentFrame: self.frame)
+        currentPlayer = PlayerSprite(parentFrame: self.frame)
         
-        self.addChild(lilSpacey.playerSprite)
+        self.addChild(currentPlayer.playerSprite)
         
-        //Needs to be refactored to its own class
-        let map = SKSpriteNode(color: UIColor.redColor(), size: CGSizeMake(self.frame.width, self.frame.height/2))
+        //MAP Needs to be refactored to its own class
+        print(self.frame.width)
+        print(self.frame.height)
+        let map = SKSpriteNode(color: UIColor.blueColor(), size: CGSizeMake(self.frame.width, self.frame.width))
         map.position = CGPointMake(self.frame.width/2, self.frame.height/2)
         self.addChild(map)
         
+        //CHECKER BOARD
+        let row = 10
+        let height = 10
+        let alphabet = "abcdefghijklmnopqrstuvwxyz"
+        let widthOfSquare = map.frame.width/CGFloat(row)
+        let heightOfSquare = map.frame.height/CGFloat(height)
+        let halfOfMapWidth = map.frame.width/2
+        let halfOfMapHeight = map.frame.height/2
+        
+        print(map.frame.width)
+        print(map.frame.height)
+//        let checker = SKSpriteNode(color: UIColor.yellowColor(), size: CGSizeMake(map.frame.width/10, map.frame.height/10))
+//        checker.position = CGPointMake(-map.frame.width/2 + checker.frame.width/2, -map.frame.height/2 + checker.frame.height/2)
+//        map.addChild(checker)
+        for numHeight in 1...height {
+            for numRow in 1...row {
+                let colorOfSquare = (numRow + numHeight) % 2 == 0 ? SKColor.redColor() : SKColor.blackColor()
+                let singleSquare = SKSpriteNode(color: colorOfSquare, size: CGSizeMake(widthOfSquare, heightOfSquare))
+                let xOffset = singleSquare.frame.width * CGFloat(numRow) - singleSquare.frame.width/2
+                let yOffset = singleSquare.frame.height * CGFloat(numHeight) - singleSquare.frame.height/2
+                singleSquare.name = "\(Array(alphabet.characters)[numRow - 1])\(String(numHeight))"
+                singleSquare.position = CGPointMake(-halfOfMapWidth + xOffset , -halfOfMapHeight + yOffset)
+                //singleSquare.alpha = 0.5
+                map.addChild(singleSquare)
+                
+                print(singleSquare.name)
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchesBeganCounter++
-        lilSpacey.playerSprite.removeAllActions()
-        lilSpacey.updatePlayerPosition(self, touches: touches)
+        currentPlayer.playerSprite.removeAllActions()
+        currentPlayer.updatePlayerPosition(self, touches: touches)
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -41,7 +71,7 @@ class GameScene: SKScene {
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         touchesBeganCounter--
         if touchesBeganCounter == 0 {
-            lilSpacey.playerSprite.removeAllActions()
+            currentPlayer.playerSprite.removeAllActions()
         }
     }
     
