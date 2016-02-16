@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:SKPlayGround.xcodeproj">
+      location = "self:/Users/jonoh/Desktop/SwiftCode/SKPlayGround/SkullRhythm.xcodeproj">
    </FileRef>
 </Workspace>
