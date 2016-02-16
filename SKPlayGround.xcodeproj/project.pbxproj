@@ -19,6 +19,12 @@
 		8BC03C741C71BF6A00F3FA8C /* LevelGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */; };
 		8BC03C761C728D3200F3FA8C /* explosionEightBit.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */; };
 		8BC03C781C72940900F3FA8C /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C771C72940900F3FA8C /* explosion.wav */; };
+		8BC03C7D1C72B1C600F3FA8C /* FireParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C7B1C72B1C600F3FA8C /* FireParticle.sks */; };
+		8BC03C7E1C72B1C600F3FA8C /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C7C1C72B1C600F3FA8C /* spark.png */; };
+		8BC03C801C72BC1500F3FA8C /* explode.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C7F1C72BC1500F3FA8C /* explode.atlas */; };
+		8BC03C821C72C32300F3FA8C /* skull.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C811C72C32300F3FA8C /* skull.png */; };
+		8BC03C841C72C8BE00F3FA8C /* playerSplat.png in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C831C72C8BE00F3FA8C /* playerSplat.png */; };
+		8BC03C861C72D46300F3FA8C /* GameOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03C851C72D46300F3FA8C /* GameOver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +42,12 @@
 		8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelGenerator.swift; sourceTree = "<group>"; };
 		8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = explosionEightBit.aiff; sourceTree = "<group>"; };
 		8BC03C771C72940900F3FA8C /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
+		8BC03C7B1C72B1C600F3FA8C /* FireParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticle.sks; sourceTree = "<group>"; };
+		8BC03C7C1C72B1C600F3FA8C /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		8BC03C7F1C72BC1500F3FA8C /* explode.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = explode.atlas; sourceTree = "<group>"; };
+		8BC03C811C72C32300F3FA8C /* skull.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skull.png; sourceTree = "<group>"; };
+		8BC03C831C72C8BE00F3FA8C /* playerSplat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playerSplat.png; sourceTree = "<group>"; };
+		8BC03C851C72D46300F3FA8C /* GameOver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,9 +84,15 @@
 				8BC03C6F1C7029B000F3FA8C /* PlayerSprite.swift */,
 				8B2AB8AC1C6DAAD4007CA0C0 /* GameScene.sks */,
 				8B2AB8AE1C6DAAD4007CA0C0 /* GameScene.swift */,
+				8BC03C851C72D46300F3FA8C /* GameOver.swift */,
+				8BC03C7B1C72B1C600F3FA8C /* FireParticle.sks */,
+				8BC03C7C1C72B1C600F3FA8C /* spark.png */,
+				8BC03C831C72C8BE00F3FA8C /* playerSplat.png */,
 				8BC03C711C7161CE00F3FA8C /* GameMap.swift */,
 				8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */,
 				8B2AB8B01C6DAAD4007CA0C0 /* GameViewController.swift */,
+				8BC03C811C72C32300F3FA8C /* skull.png */,
+				8BC03C7F1C72BC1500F3FA8C /* explode.atlas */,
 				8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */,
 				8BC03C771C72940900F3FA8C /* explosion.wav */,
 				8B2AB8B21C6DAAD4007CA0C0 /* Main.storyboard */,
@@ -144,11 +162,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BC03C781C72940900F3FA8C /* explosion.wav in Resources */,
+				8BC03C7D1C72B1C600F3FA8C /* FireParticle.sks in Resources */,
+				8BC03C841C72C8BE00F3FA8C /* playerSplat.png in Resources */,
 				8B2AB8AD1C6DAAD4007CA0C0 /* GameScene.sks in Resources */,
+				8BC03C821C72C32300F3FA8C /* skull.png in Resources */,
 				8B2AB8B91C6DAAD4007CA0C0 /* LaunchScreen.storyboard in Resources */,
 				8B2AB8B61C6DAAD4007CA0C0 /* Assets.xcassets in Resources */,
+				8BC03C7E1C72B1C600F3FA8C /* spark.png in Resources */,
 				8B2AB8B41C6DAAD4007CA0C0 /* Main.storyboard in Resources */,
 				8BC03C761C728D3200F3FA8C /* explosionEightBit.aiff in Resources */,
+				8BC03C801C72BC1500F3FA8C /* explode.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +184,7 @@
 			files = (
 				8B2AB8AF1C6DAAD4007CA0C0 /* GameScene.swift in Sources */,
 				8BC03C701C7029B000F3FA8C /* PlayerSprite.swift in Sources */,
+				8BC03C861C72D46300F3FA8C /* GameOver.swift in Sources */,
 				8B2AB8B11C6DAAD4007CA0C0 /* GameViewController.swift in Sources */,
 				8BC03C721C7161CE00F3FA8C /* GameMap.swift in Sources */,
 				8BC03C741C71BF6A00F3FA8C /* LevelGenerator.swift in Sources */,

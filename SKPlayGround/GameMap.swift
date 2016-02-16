@@ -23,6 +23,7 @@ class GameMap {
     let halfOfMapHeight : CGFloat
     var arrayOfSquareNodes = [SKSpriteNode]()
     
+    
     init(currentScene : SKScene) {
         //Create, Configure, and Add mapContainer Node
         mapContainer = SKSpriteNode(color: UIColor.blueColor(), size: CGSizeMake(currentScene.frame.width, currentScene.frame.width))
@@ -47,9 +48,13 @@ class GameMap {
                 singleSquare.physicsBody = SKPhysicsBody(rectangleOfSize: sizeOfSquare)
                 singleSquare.physicsBody?.dynamic = false
                 singleSquare.physicsBody?.categoryBitMask = GameScene.squareCategory
+                
                 arrayOfSquareNodes.append(singleSquare)
                 
-                let explosionNode = SKSpriteNode(color: SKColor.redColor(), size: sizeOfSquare)
+                let explosionNode = SKSpriteNode(imageNamed: "skull")//SKSpriteNode(color: SKColor.redColor(), size: sizeOfSquare)
+                explosionNode.size = CGSizeMake(widthOfSquare*0.9, heightOfSquare*0.9)
+                //explosionNode.advanceSimulationTime(10)
+                explosionNode.zPosition = 2
                 explosionNode.name = "explosion"
                 explosionNode.hidden = true
                 explosionNode.physicsBody = SKPhysicsBody(rectangleOfSize: sizeOfSquare)

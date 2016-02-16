@@ -62,4 +62,15 @@ class PlayerSprite {
         }
     }
     
+    func playerHasDied() {
+//        let bloodSplat = SKSpriteNode(imageNamed: "playerSplat")
+//        bloodSplat.size = CGSizeMake(90, 90)
+//        bloodSplat.position = playerSprite.position
+//        //currentScene.addChild(bloodSplat)
+        playerSprite.removeFromParent()
+        //Death Animation
+        //Wait 3
+        //Respawn
+    }
+    
 }
