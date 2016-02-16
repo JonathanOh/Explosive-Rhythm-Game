@@ -15,6 +15,10 @@
 		8B2AB8B61C6DAAD4007CA0C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AB8B51C6DAAD4007CA0C0 /* Assets.xcassets */; };
 		8B2AB8B91C6DAAD4007CA0C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AB8B71C6DAAD4007CA0C0 /* LaunchScreen.storyboard */; };
 		8BC03C701C7029B000F3FA8C /* PlayerSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03C6F1C7029B000F3FA8C /* PlayerSprite.swift */; };
+		8BC03C721C7161CE00F3FA8C /* GameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03C711C7161CE00F3FA8C /* GameMap.swift */; };
+		8BC03C741C71BF6A00F3FA8C /* LevelGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */; };
+		8BC03C761C728D3200F3FA8C /* explosionEightBit.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */; };
+		8BC03C781C72940900F3FA8C /* explosion.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8BC03C771C72940900F3FA8C /* explosion.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		8B2AB8B81C6DAAD4007CA0C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B2AB8BA1C6DAAD4007CA0C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BC03C6F1C7029B000F3FA8C /* PlayerSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayerSprite.swift; path = ../PlayerSprite.swift; sourceTree = "<group>"; };
+		8BC03C711C7161CE00F3FA8C /* GameMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameMap.swift; sourceTree = "<group>"; };
+		8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelGenerator.swift; sourceTree = "<group>"; };
+		8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = explosionEightBit.aiff; sourceTree = "<group>"; };
+		8BC03C771C72940900F3FA8C /* explosion.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = explosion.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +72,11 @@
 				8BC03C6F1C7029B000F3FA8C /* PlayerSprite.swift */,
 				8B2AB8AC1C6DAAD4007CA0C0 /* GameScene.sks */,
 				8B2AB8AE1C6DAAD4007CA0C0 /* GameScene.swift */,
+				8BC03C711C7161CE00F3FA8C /* GameMap.swift */,
+				8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */,
 				8B2AB8B01C6DAAD4007CA0C0 /* GameViewController.swift */,
+				8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */,
+				8BC03C771C72940900F3FA8C /* explosion.wav */,
 				8B2AB8B21C6DAAD4007CA0C0 /* Main.storyboard */,
 				8B2AB8B51C6DAAD4007CA0C0 /* Assets.xcassets */,
 				8B2AB8B71C6DAAD4007CA0C0 /* LaunchScreen.storyboard */,
@@ -131,10 +143,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BC03C781C72940900F3FA8C /* explosion.wav in Resources */,
 				8B2AB8AD1C6DAAD4007CA0C0 /* GameScene.sks in Resources */,
 				8B2AB8B91C6DAAD4007CA0C0 /* LaunchScreen.storyboard in Resources */,
 				8B2AB8B61C6DAAD4007CA0C0 /* Assets.xcassets in Resources */,
 				8B2AB8B41C6DAAD4007CA0C0 /* Main.storyboard in Resources */,
+				8BC03C761C728D3200F3FA8C /* explosionEightBit.aiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +162,8 @@
 				8B2AB8AF1C6DAAD4007CA0C0 /* GameScene.swift in Sources */,
 				8BC03C701C7029B000F3FA8C /* PlayerSprite.swift in Sources */,
 				8B2AB8B11C6DAAD4007CA0C0 /* GameViewController.swift in Sources */,
+				8BC03C721C7161CE00F3FA8C /* GameMap.swift in Sources */,
+				8BC03C741C71BF6A00F3FA8C /* LevelGenerator.swift in Sources */,
 				8B2AB8AB1C6DAAD4007CA0C0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
