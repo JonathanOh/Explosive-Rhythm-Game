@@ -20,6 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentPlayer : PlayerSprite!
     var currentMap : GameMap!
     var currentLevel : LevelGenerator!
+    private var levelLabel : SKLabelNode!
     
     
     //Define categories for contact notification to store in categoryBitMask (requires 32 bit unsigned)
@@ -54,6 +55,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(backGroundFinishNode)
         backGroundFinishNode.addChild(finishNode)
         
+        //Current Level Node
+        levelLabel = SKLabelNode(text: "Level: \(currentLevel.levelTracker)")
+        levelLabel.position = CGPointMake(self.frame.width/7.5, self.frame.height/1.25)
+        levelLabel.fontSize = 30
+        levelLabel.fontColor = SKColor.blackColor()
+        self.addChild(levelLabel)
+        
 //        for familyName:AnyObject in UIFont.familyNames() {
 //            print("Family Name: \(familyName)")
 //            for fontName:AnyObject in UIFont.fontNamesForFamilyName(familyName as! String) {
@@ -79,6 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     //trigger next level
                     self.currentPlayer.playerSprite.position = CGPointMake(self.frame.width/2, self.frame.height/10)
                     self.currentLevel.nextLevelHandler(self)
+                    self.levelLabel.text = "Level: \(self.currentLevel.levelTracker)"
                     stop.memory = true
                 }
             }

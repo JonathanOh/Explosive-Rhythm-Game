@@ -22,7 +22,13 @@ class LevelGenerator {
     var lengthOfCurrentBoard : Int
     var explodeTextureArray = [SKTexture]()
     
-    private var leveltracker : Int = 1
+    private var _leveltracker : Int = 1
+    
+    var levelTracker : Int {
+        get {
+            return _leveltracker
+        }
+    }
     
     // Need better solution for sound handling.  Multiple sound nodes playing at once, want to only play 1 instance of it at a time.
     var shouldHaveSound = true
@@ -43,9 +49,12 @@ class LevelGenerator {
         currentScene.enumerateChildNodesWithName("//*") {
             node, stop in
             node.removeAllActions()
+            if (node.name == "explosion") {
+                node.hidden = true
+            }
         }
-        leveltracker++
-        switch leveltracker {
+        _leveltracker++
+        switch _leveltracker {
         case 1:
             levelOne()
         case 2:
