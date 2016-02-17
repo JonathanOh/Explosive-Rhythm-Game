@@ -21,6 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var currentMap : GameMap!
     var currentLevel : LevelGenerator!
     private var levelLabel : SKLabelNode!
+    private var livesRemaininglabel : SKLabelNode!
     
     
     //Define categories for contact notification to store in categoryBitMask (requires 32 bit unsigned)
@@ -31,7 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        self.backgroundColor = SKColor.whiteColor()
+        self.backgroundColor = SKColor.blackColor()
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0)
         self.physicsWorld.contactDelegate = self
         
@@ -59,8 +60,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         levelLabel = SKLabelNode(text: "Level: \(currentLevel.levelTracker)")
         levelLabel.position = CGPointMake(self.frame.width/7.5, self.frame.height/1.25)
         levelLabel.fontSize = 30
-        levelLabel.fontColor = SKColor.blackColor()
+        levelLabel.fontColor = SKColor.whiteColor()
         self.addChild(levelLabel)
+        
+        //Lives Remaining Label
+        livesRemaininglabel = SKLabelNode(text: "Lives: 10")
+        livesRemaininglabel.position = CGPointMake(self.frame.width/6.5, self.frame.height/5.50)
+        livesRemaininglabel.fontSize = 30
+        livesRemaininglabel.fontColor = SKColor.whiteColor()
+        self.addChild(livesRemaininglabel)
         
 //        for familyName:AnyObject in UIFont.familyNames() {
 //            print("Family Name: \(familyName)")
@@ -77,6 +85,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             node, stop in
             if (node.name == nodeName) {
                 if (node.intersectsNode(self.currentPlayer.playerSprite) && !node.hidden) {
+                    self.currentPlayer.playerSprite.removeAllActions()
                     print("explode")
                     playerDied = true
                     stop.memory = true
@@ -96,15 +105,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let bloodSplat = SKSpriteNode(imageNamed: "playerSplat")
             bloodSplat.size = CGSizeMake(90, 90)
             bloodSplat.position = self.currentPlayer.playerSprite.position
+            bloodSplat.alpha = 0.60
             bloodSplat.zPosition = 1
+            let fadeOut = SKAction.fadeOutWithDuration(2)
             self.addChild(bloodSplat)
-            self.currentPlayer.playerHasDied()
-            
-            let gameOver = GameOver(size: self.size)
-            gameOver.scaleMode = .AspectFill
-            gameOver.backgroundColor = SKColor.blackColor()
-            let newTransition = SKTransition.doorsCloseHorizontalWithDuration(1.5)
-            self.view?.presentScene(gameOver, transition: newTransition)
+            bloodSplat.runAction(fadeOut)
+            bloodSplat
+            let liveRemaining = self.currentPlayer.livesLeft()
+            if liveRemaining > 0 {
+                self.livesRemaininglabel.text = "Lives: \(liveRemaining)"
+                self.currentPlayer.playerSprite.position = CGPointMake(self.frame.width/2, self.frame.height/10)
+            } else {
+                let gameOver = GameOver(size: self.size)
+                gameOver.scaleMode = .AspectFill
+                gameOver.backgroundColor = SKColor.blackColor()
+                let newTransition = SKTransition.doorsCloseHorizontalWithDuration(1.5)
+                self.view?.presentScene(gameOver, transition: newTransition)
+            }
             
         }
     }

@@ -45,6 +45,7 @@ class GameMap {
                 let yOffset = singleSquare.frame.height * CGFloat(numHeight) - singleSquare.frame.height/2
                 singleSquare.name = "\(Array(alphabet.characters)[numRow - 1])\(String(numHeight))"
                 singleSquare.position = CGPointMake(-halfOfMapWidth + xOffset , -halfOfMapHeight + yOffset)
+                singleSquare.texture = SKTexture(imageNamed: "tileSet")
                 singleSquare.physicsBody = SKPhysicsBody(rectangleOfSize: sizeOfSquare)
                 singleSquare.physicsBody?.dynamic = false
                 singleSquare.physicsBody?.categoryBitMask = GameScene.squareCategory
@@ -52,6 +53,7 @@ class GameMap {
                 arrayOfSquareNodes.append(singleSquare)
                 
                 let explosionNode = SKSpriteNode(imageNamed: "skull")//SKSpriteNode(color: SKColor.redColor(), size: sizeOfSquare)
+                explosionNode.alpha = 0
                 explosionNode.size = CGSizeMake(widthOfSquare*0.9, heightOfSquare*0.9)
                 //explosionNode.advanceSimulationTime(10)
                 explosionNode.zPosition = 2

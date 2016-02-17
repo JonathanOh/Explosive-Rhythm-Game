@@ -13,6 +13,7 @@ class PlayerSprite {
     private var _playerSpeed : Double = 500
     private var _playerSprite = SKSpriteNode(imageNamed: "circleTest")
     private var _playerSize = CGSize(width: 20, height: 20)
+    private var _livesRemaining = 10
     
     var playerSpeed : Double {
         get {
@@ -43,6 +44,7 @@ class PlayerSprite {
         //_playerSprite.size = CGSize(width: Double(parentFrame.width)/21.0, height: Double(parentFrame.width)/21.0)
         _playerSprite.size = CGSize(width: 20, height: 20)
         _playerSprite.position = CGPointMake(parentFrame.width/2, parentFrame.height/10)
+        _playerSprite.zPosition = 5
         _playerSprite.physicsBody = SKPhysicsBody(circleOfRadius: _playerSize.width/2)
         _playerSprite.physicsBody?.categoryBitMask = GameScene.playerCategory
         _playerSprite.physicsBody?.contactTestBitMask = GameScene.squareCategory
@@ -62,15 +64,16 @@ class PlayerSprite {
         }
     }
     
-    func playerHasDied() {
-//        let bloodSplat = SKSpriteNode(imageNamed: "playerSplat")
-//        bloodSplat.size = CGSizeMake(90, 90)
-//        bloodSplat.position = playerSprite.position
-//        //currentScene.addChild(bloodSplat)
+    func livesLeft() -> Int {
+        _livesRemaining--
+        if _livesRemaining <= 0 {
+            removePlayerFromGame()
+        }
+        return _livesRemaining
+    }
+    
+    func removePlayerFromGame() {
         playerSprite.removeFromParent()
-        //Death Animation
-        //Wait 3
-        //Respawn
     }
     
 }

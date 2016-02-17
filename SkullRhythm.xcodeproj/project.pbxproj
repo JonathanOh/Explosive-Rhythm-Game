@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B108BB41C744C5000F2E62F /* tileSet.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B108BB31C744C5000F2E62F /* tileSet.png */; };
+		8B108BB61C7460DF00F2E62F /* blueExplosion.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 8B108BB51C7460DF00F2E62F /* blueExplosion.atlas */; };
 		8B2AB8AB1C6DAAD4007CA0C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AB8AA1C6DAAD4007CA0C0 /* AppDelegate.swift */; };
 		8B2AB8AD1C6DAAD4007CA0C0 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8B2AB8AC1C6DAAD4007CA0C0 /* GameScene.sks */; };
 		8B2AB8AF1C6DAAD4007CA0C0 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2AB8AE1C6DAAD4007CA0C0 /* GameScene.swift */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B108BB31C744C5000F2E62F /* tileSet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tileSet.png; sourceTree = "<group>"; };
+		8B108BB51C7460DF00F2E62F /* blueExplosion.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = blueExplosion.atlas; sourceTree = "<group>"; };
 		8B2AB8A71C6DAAD4007CA0C0 /* SkullRhythm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkullRhythm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B2AB8AA1C6DAAD4007CA0C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B2AB8AC1C6DAAD4007CA0C0 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -91,7 +95,9 @@
 				8BC03C711C7161CE00F3FA8C /* GameMap.swift */,
 				8BC03C731C71BF6A00F3FA8C /* LevelGenerator.swift */,
 				8B2AB8B01C6DAAD4007CA0C0 /* GameViewController.swift */,
+				8B108BB31C744C5000F2E62F /* tileSet.png */,
 				8BC03C811C72C32300F3FA8C /* skull.png */,
+				8B108BB51C7460DF00F2E62F /* blueExplosion.atlas */,
 				8BC03C7F1C72BC1500F3FA8C /* explode.atlas */,
 				8BC03C751C728D3200F3FA8C /* explosionEightBit.aiff */,
 				8BC03C771C72940900F3FA8C /* explosion.wav */,
@@ -166,6 +172,7 @@
 				8BC03C7D1C72B1C600F3FA8C /* FireParticle.sks in Resources */,
 				8BC03C841C72C8BE00F3FA8C /* playerSplat.png in Resources */,
 				8B2AB8AD1C6DAAD4007CA0C0 /* GameScene.sks in Resources */,
+				8B108BB41C744C5000F2E62F /* tileSet.png in Resources */,
 				8BC03C821C72C32300F3FA8C /* skull.png in Resources */,
 				8B2AB8B91C6DAAD4007CA0C0 /* LaunchScreen.storyboard in Resources */,
 				8B2AB8B61C6DAAD4007CA0C0 /* Assets.xcassets in Resources */,
@@ -173,6 +180,7 @@
 				8B2AB8B41C6DAAD4007CA0C0 /* Main.storyboard in Resources */,
 				8BC03C761C728D3200F3FA8C /* explosionEightBit.aiff in Resources */,
 				8BC03C801C72BC1500F3FA8C /* explode.atlas in Resources */,
+				8B108BB61C7460DF00F2E62F /* blueExplosion.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -40,7 +40,11 @@ class LevelGenerator {
         for node in currentMap.arrayOfSquareNodes {
             arrayOfSquareNodes.append(node)
         }
-        //print("\(arrayOfSquareNodes)")
+        
+        for var i = 1; i <= 7; i++ {
+            let texture = SKTexture(imageNamed: "blue\(i).png")
+            explodeTextureArray.append(texture)
+        }
         
         levelOne()
     }
@@ -84,6 +88,18 @@ class LevelGenerator {
         return finalAction
     }
     
+    func animationActionCreator(initialWait: NSTimeInterval, timeInterval: NSTimeInterval) -> SKAction {
+        let waitFor = SKAction.waitForDuration(timeInterval)
+        let initialWaitFor = SKAction.waitForDuration(initialWait)
+        let explosionAnimation = SKAction.animateWithTextures(explodeTextureArray, timePerFrame: 0.025, resize: false, restore: true)
+        let arrayOfActions = SKAction.sequence([durationOfDeathExplosion, waitFor])
+        let groupedActions = SKAction.group([explosionAnimation, arrayOfActions])
+        let repeater = SKAction.repeatActionForever(groupedActions)
+        let finalAction = SKAction.sequence([initialWaitFor, repeater])
+        //shouldHaveSound = false
+        return finalAction
+    }
+    
     func waitStagger(staggerTime : NSTimeInterval, times: NSTimeInterval) -> NSTimeInterval {
         let createdTime = staggerTime * times
         return createdTime
@@ -92,6 +108,9 @@ class LevelGenerator {
     func explodeRow(rowNum: Int, initialWait: NSTimeInterval, timeInterval: NSTimeInterval) {
         for action in (widthOfCurrentBoard * rowNum - widthOfCurrentBoard)..<(widthOfCurrentBoard * rowNum) {
             let explodeRowAction = actionCreator(initialWait, timeInterval: timeInterval)
+            //let explosionAnimation = SKAction.animateWithTextures(explodeTextureArray, timePerFrame: 0.1)
+            let explosionAnimation = animationActionCreator(initialWait, timeInterval: timeInterval)
+            arrayOfSquareNodes[action].runAction(explosionAnimation)
             arrayOfSquareNodes[action].childNodeWithName("explosion")!.runAction(explodeRowAction)
             
         }
