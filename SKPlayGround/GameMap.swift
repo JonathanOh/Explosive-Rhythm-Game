@@ -13,8 +13,8 @@ class GameMap {
     let mapContainer : SKSpriteNode
     
     //Constants for Square creation
-    let row = 10 //Row should not exceed alphabet.length
-    let height = 10
+    let col = 10 //col should not exceed alphabet.length
+    let row = 10
     let alphabet = "abcdefghijklmnopqrstuvwxyz"
     let widthOfSquare : CGFloat
     let heightOfSquare : CGFloat
@@ -30,15 +30,15 @@ class GameMap {
         mapContainer.position = CGPointMake(currentScene.frame.width/2, currentScene.frame.height/2)
         
         //Create, Configure, and Add Individual Square Nodes
-        widthOfSquare = mapContainer.frame.width/CGFloat(row)
-        heightOfSquare = mapContainer.frame.height/CGFloat(height)
+        widthOfSquare = mapContainer.frame.width/CGFloat(col)
+        heightOfSquare = mapContainer.frame.height/CGFloat(row)
         sizeOfSquare = CGSizeMake(widthOfSquare, heightOfSquare)
         halfOfMapWidth = mapContainer.frame.width/2
         halfOfMapHeight = mapContainer.frame.height/2
         
         //Generates a grid of nodes with an explosion node overlayed
-        for numHeight in 1...height {
-            for numRow in 1...row {
+        for numHeight in 1...row {
+            for numRow in 1...col {
                 let colorOfSquare = (numRow + numHeight) % 2 == 0 ? SKColor.grayColor() : SKColor.blackColor()
                 let singleSquare = SKSpriteNode(color: colorOfSquare, size: sizeOfSquare)
                 let xOffset = singleSquare.frame.width * CGFloat(numRow) - singleSquare.frame.width/2
