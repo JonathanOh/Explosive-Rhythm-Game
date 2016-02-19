@@ -16,7 +16,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     //touchesBeganCounter is used to provide smoother player controls.  Will need a better solution.
-    var touchesBeganCounter = 0
+    //var touchesBeganCounter = 0
     var currentPlayer : PlayerSprite!
     var currentMap : GameMap!
     var currentLevel : LevelGenerator!
@@ -36,8 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0.0, 0.0)
         self.physicsWorld.contactDelegate = self
         
-        currentPlayer = PlayerSprite(parentFrame: self.frame)
         currentMap = GameMap(currentScene: self)
+        currentPlayer = PlayerSprite(parentFrame: self.frame, currentMap: currentMap)
         
         currentLevel = LevelGenerator(currentMap: currentMap)
         
@@ -70,6 +70,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         livesRemaininglabel.fontColor = SKColor.whiteColor()
         self.addChild(livesRemaininglabel)
         
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view!.addGestureRecognizer(swipeRight)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeDown.direction = UISwipeGestureRecognizerDirection.Down
+        self.view!.addGestureRecognizer(swipeDown)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view!.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeUp.direction = UISwipeGestureRecognizerDirection.Up
+        self.view!.addGestureRecognizer(swipeUp)
+        
 //        for familyName:AnyObject in UIFont.familyNames() {
 //            print("Family Name: \(familyName)")
 //            for fontName:AnyObject in UIFont.fontNamesForFamilyName(familyName as! String) {
@@ -94,7 +110,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if (node.name == "finished") {
                 if (node.intersectsNode(self.currentPlayer.playerSprite)) {
                     //trigger next level
-                    self.currentPlayer.playerSprite.position = CGPointMake(self.frame.width/2, self.frame.height/10)
+                    self.currentPlayer.playerSprite.position = self.currentPlayer.defaultPlayerPosition
                     self.currentLevel.nextLevelHandler(self)
                     self.levelLabel.text = "Level: \(self.currentLevel.levelTracker)"
                     stop.memory = true
@@ -114,7 +130,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let liveRemaining = self.currentPlayer.livesLeft()
             if liveRemaining > 0 {
                 self.livesRemaininglabel.text = "Lives: \(liveRemaining)"
-                self.currentPlayer.playerSprite.position = CGPointMake(self.frame.width/2, self.frame.height/10)
+                self.currentPlayer.playerSprite.position = self.currentPlayer.defaultPlayerPosition
             } else {
                 let gameOver = GameOver(size: self.size)
                 gameOver.scaleMode = .AspectFill
@@ -130,18 +146,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        touchesBeganCounter++
-        currentPlayer.playerSprite.removeAllActions()
-        currentPlayer.updatePlayerPosition(self, touches: touches)
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        touchesBeganCounter--
-        if touchesBeganCounter == 0 {
-            currentPlayer.playerSprite.removeAllActions()
+        if (currentPlayer.playerSprite.position.y < self.frame.height - currentMap.heightOfSquare) {
+            currentPlayer.moveUp(currentMap)
+        }
+    }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                if (currentPlayer.playerSprite.position.x < self.frame.width - currentMap.widthOfSquare) {
+                    currentPlayer.moveRight(currentMap)
+                }
+            case UISwipeGestureRecognizerDirection.Down:
+                if (currentPlayer.playerSprite.position.y > currentMap.heightOfSquare) {
+                    currentPlayer.moveDown(currentMap)
+                }
+            case UISwipeGestureRecognizerDirection.Left:
+                if (currentPlayer.playerSprite.position.x > currentMap.widthOfSquare) {
+                    currentPlayer.moveLeft(currentMap)
+                }
+            case UISwipeGestureRecognizerDirection.Up:
+                if (currentPlayer.playerSprite.position.y < self.frame.height - currentMap.heightOfSquare) {
+                    currentPlayer.moveUp(currentMap)
+                }
+            default:
+                break
+            }
         }
     }
     

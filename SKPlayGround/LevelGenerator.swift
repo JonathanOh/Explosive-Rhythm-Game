@@ -22,7 +22,7 @@ class LevelGenerator {
     var lengthOfCurrentBoard : Int
     var explodeTextureArray = [SKTexture]()
     
-    private var _leveltracker : Int = 1
+    private var _leveltracker : Int = 0
     
     var levelTracker : Int {
         get {
@@ -35,8 +35,8 @@ class LevelGenerator {
     
     init(currentMap : GameMap) {
         
-        widthOfCurrentBoard = currentMap.row
-        lengthOfCurrentBoard = currentMap.height
+        widthOfCurrentBoard = currentMap.col
+        lengthOfCurrentBoard = currentMap.row
         for node in currentMap.arrayOfSquareNodes {
             arrayOfSquareNodes.append(node)
         }
@@ -46,7 +46,7 @@ class LevelGenerator {
             explodeTextureArray.append(texture)
         }
         
-        levelOne()
+        levelZero()
     }
     
     func nextLevelHandler(currentScene: GameScene) {
@@ -73,6 +73,10 @@ class LevelGenerator {
             levelSix()
         case 7:
             levelSeven()
+        case 8:
+            levelEight()
+        case 9:
+            levelNine()
         default:
             levelOne()
         }
@@ -108,13 +112,28 @@ class LevelGenerator {
     func explodeRow(rowNum: Int, initialWait: NSTimeInterval, timeInterval: NSTimeInterval) {
         for action in (widthOfCurrentBoard * rowNum - widthOfCurrentBoard)..<(widthOfCurrentBoard * rowNum) {
             let explodeRowAction = actionCreator(initialWait, timeInterval: timeInterval)
-            //let explosionAnimation = SKAction.animateWithTextures(explodeTextureArray, timePerFrame: 0.1)
             let explosionAnimation = animationActionCreator(initialWait, timeInterval: timeInterval)
             arrayOfSquareNodes[action].runAction(explosionAnimation)
             arrayOfSquareNodes[action].childNodeWithName("explosion")!.runAction(explodeRowAction)
             
         }
         shouldHaveSound = true
+    }
+    func explodeCol(colNum: Int, initialWait: NSTimeInterval, timeInterval: NSTimeInterval) {
+        for var action = colNum - 1; action <= arrayOfSquareNodes.count - 1; action += 10 {
+            let explodeColAction = actionCreator(initialWait, timeInterval: timeInterval)
+            let explosionAnimation = animationActionCreator(initialWait, timeInterval: timeInterval)
+            arrayOfSquareNodes[action].runAction(explosionAnimation)
+            arrayOfSquareNodes[action].childNodeWithName("explosion")!.runAction(explodeColAction)
+            
+        }
+        shouldHaveSound = true
+    }
+    
+    func levelZero() {
+        
+        explodeRow(6, initialWait: waitStagger(0.50, times: 0), timeInterval: 1)
+        //return
     }
     
     func levelOne() {//Single rhythm + Single line
@@ -156,7 +175,20 @@ class LevelGenerator {
         explodeRow(10, initialWait: waitStagger(0.50, times: 0), timeInterval: 5)
     }
     
-    func levelFour() {//Single rhythm + double line + reverse
+    func levelFour() {
+        explodeCol(1, initialWait: waitStagger(0.50, times: 0), timeInterval: 2)
+        explodeCol(2, initialWait: waitStagger(0.50, times: 1), timeInterval: 2)
+        explodeCol(3, initialWait: waitStagger(0.50, times: 2), timeInterval: 2)
+        explodeCol(4, initialWait: waitStagger(0.50, times: 3), timeInterval: 2)
+        explodeCol(5, initialWait: waitStagger(0.50, times: 4), timeInterval: 2)
+        explodeCol(6, initialWait: waitStagger(0.50, times: 0), timeInterval: 2)
+        explodeCol(7, initialWait: waitStagger(0.50, times: 1), timeInterval: 2)
+        explodeCol(8, initialWait: waitStagger(0.50, times: 2), timeInterval: 2)
+        explodeCol(9, initialWait: waitStagger(0.50, times: 3), timeInterval: 2)
+        explodeCol(10, initialWait: waitStagger(0.50, times: 4), timeInterval: 2)
+    }
+    
+    func levelFive() {//Single rhythm + double line + reverse
         explodeRow(1, initialWait: waitStagger(0.50, times: 4), timeInterval: 2.5)
         explodeRow(2, initialWait: waitStagger(0.50, times: 3), timeInterval: 2.5)
         explodeRow(3, initialWait: waitStagger(0.50, times: 2), timeInterval: 2.5)
@@ -168,7 +200,8 @@ class LevelGenerator {
         explodeRow(9, initialWait: waitStagger(0.50, times: 1), timeInterval: 2.5)
         explodeRow(10, initialWait: waitStagger(0.50, times: 0), timeInterval: 2.5)
     }
-    func levelFive() {//Single rhythm + 5 lines
+
+    func levelSix() {//Single rhythm + 5 lines
         explodeRow(1, initialWait: waitStagger(0.50, times: 0), timeInterval: 1)
         explodeRow(2, initialWait: waitStagger(0.50, times: 1), timeInterval: 1)
         explodeRow(3, initialWait: waitStagger(0.50, times: 0), timeInterval: 1)
@@ -181,7 +214,20 @@ class LevelGenerator {
         explodeRow(10, initialWait: waitStagger(0.50, times: 1), timeInterval: 1)
     }
     
-    func levelSix() {//Double rhythm + 2 lines
+    func levelSeven() {
+        explodeCol(1, initialWait: waitStagger(1, times: 0), timeInterval: 2)
+        explodeCol(2, initialWait: waitStagger(1, times: 1), timeInterval: 2)
+        explodeCol(3, initialWait: waitStagger(1, times: 0), timeInterval: 2)
+        explodeCol(4, initialWait: waitStagger(1, times: 1), timeInterval: 2)
+        explodeCol(5, initialWait: waitStagger(1, times: 0), timeInterval: 2)
+        explodeCol(6, initialWait: waitStagger(1, times: 1), timeInterval: 2)
+        explodeCol(7, initialWait: waitStagger(1, times: 0), timeInterval: 2)
+        explodeCol(8, initialWait: waitStagger(1, times: 1), timeInterval: 2)
+        explodeCol(9, initialWait: waitStagger(1, times: 0), timeInterval: 2)
+        explodeCol(10, initialWait: waitStagger(1, times: 1), timeInterval: 2)
+    }
+    
+    func levelEight() {//Double rhythm + 2 lines
         explodeRow(1, initialWait: waitStagger(0.50, times: 0), timeInterval: 2)
         explodeRow(2, initialWait: waitStagger(0.50, times: 1), timeInterval: 2)
         explodeRow(3, initialWait: waitStagger(0.50, times: 2), timeInterval: 2)
@@ -194,7 +240,7 @@ class LevelGenerator {
         explodeRow(10, initialWait: waitStagger(0.50, times: 0), timeInterval: 2)
     }
     
-    func levelSeven() { // Hard Rhythm
+    func levelNine() { // Hard Rhythm
         explodeRow(1, initialWait: waitStagger(0.50, times: 0), timeInterval: 1)
         explodeRow(2, initialWait: waitStagger(0.50, times: 1), timeInterval: 1)
         explodeRow(3, initialWait: waitStagger(0.50, times: 2), timeInterval: 1)
