@@ -111,41 +111,43 @@ class PlayerSprite {
         }
     }
     
+    func configureWithNewPos(position: CGPoint) -> SKAction {
+        _playerDestinationPos = position
+        let moveNodeAction = SKAction.moveTo(position, duration: 0.1)
+        return moveNodeAction
+    }
+    
     func moveUp(currentMap : GameMap) {
         if self.isPlayerMoveable() {
             let newPos = CGPointMake(self.playerSprite.position.x, self.playerSprite.position.y + currentMap.heightOfSquare)
-            _playerDestinationPos = newPos
-            let moveAction = SKAction.moveTo(newPos, duration: 0.1)
+            let moveAction = configureWithNewPos(newPos)
             self.playerSprite.runAction(moveAction)
         }
     }
     func moveDown(currentMap : GameMap) {
         if self.isPlayerMoveable() {
             let newPos = CGPointMake(self.playerSprite.position.x, self.playerSprite.position.y - currentMap.heightOfSquare)
-            _playerDestinationPos = newPos
-            let moveAction = SKAction.moveTo(newPos, duration: 0.1)
+            let moveAction = configureWithNewPos(newPos)
             self.playerSprite.runAction(moveAction)
         }
     }
     func moveLeft(currentMap : GameMap) {
         if self.isPlayerMoveable() {
             let newPos = CGPointMake(self.playerSprite.position.x - currentMap.widthOfSquare, self.playerSprite.position.y)
-            _playerDestinationPos = newPos
-            let moveAction = SKAction.moveTo(newPos, duration: 0.1)
+            let moveAction = configureWithNewPos(newPos)
             self.playerSprite.runAction(moveAction)
         }
     }
     func moveRight(currentMap : GameMap) {
         if self.isPlayerMoveable() {
             let newPos = CGPointMake(self.playerSprite.position.x + currentMap.widthOfSquare, self.playerSprite.position.y)
-            _playerDestinationPos = newPos
-            let moveAction = SKAction.moveTo(newPos, duration: 0.1)
+            let moveAction = configureWithNewPos(newPos)
             self.playerSprite.runAction(moveAction)
         }
     }
     
     func livesLeft() -> Int {
-        _livesRemaining--
+        _livesRemaining -= 1
         if _livesRemaining <= 0 {
             removePlayerFromGame()
         }

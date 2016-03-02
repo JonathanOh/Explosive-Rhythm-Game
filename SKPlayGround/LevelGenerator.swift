@@ -41,8 +41,15 @@ class LevelGenerator {
             arrayOfSquareNodes.append(node)
         }
         
-        for var i = 1; i <= 7; i++ {
-            let texture = SKTexture(imageNamed: "blue\(i).png")
+        //Blue Explosions
+//        for var i = 1; i <= 7; i++ {
+//            let texture = SKTexture(imageNamed: "blue\(i).png")
+//            explodeTextureArray.append(texture)
+//        }
+        
+        //Red Explosions
+        for i in 1...9 {
+            let texture = SKTexture(imageNamed: "red\(i).png")
             explodeTextureArray.append(texture)
         }
         
@@ -95,7 +102,7 @@ class LevelGenerator {
     func animationActionCreator(initialWait: NSTimeInterval, timeInterval: NSTimeInterval) -> SKAction {
         let waitFor = SKAction.waitForDuration(timeInterval)
         let initialWaitFor = SKAction.waitForDuration(initialWait)
-        let explosionAnimation = SKAction.animateWithTextures(explodeTextureArray, timePerFrame: 0.025, resize: false, restore: true)
+        let explosionAnimation = SKAction.animateWithTextures(explodeTextureArray, timePerFrame: 0.06, resize: false, restore: true)
         let arrayOfActions = SKAction.sequence([durationOfDeathExplosion, waitFor])
         let groupedActions = SKAction.group([explosionAnimation, arrayOfActions])
         let repeater = SKAction.repeatActionForever(groupedActions)

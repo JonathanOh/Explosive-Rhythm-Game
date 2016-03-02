@@ -95,11 +95,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func checkIfPlayerTouched(nodeName: String) {
+    func reconfigurePositionVariables() {
+        self.currentPlayer.playerSprite.position = self.currentPlayer.defaultPlayerPosition
+        self.currentPlayer.playerDestinationPos = self.currentPlayer.defaultPlayerPosition
+    }
+    
+    func checkIfPlayerTouched(explosionNode: String, finishedNode: String) {
         var playerDied = false
         enumerateChildNodesWithName("//*") {
             node, stop in
-            if (node.name == nodeName) {
+            if (node.name == explosionNode) {
                 if (node.intersectsNode(self.currentPlayer.playerSprite) && !node.hidden) {
                     self.currentPlayer.playerSprite.removeAllActions()
                     print("explode")
@@ -107,10 +112,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     stop.memory = true
                 }
             }
-            if (node.name == "finished") {
+            if (node.name == finishedNode) {
                 if (node.intersectsNode(self.currentPlayer.playerSprite)) {
                     //trigger next level
-                    self.currentPlayer.playerSprite.position = self.currentPlayer.defaultPlayerPosition
+                    self.reconfigurePositionVariables()
                     self.currentLevel.nextLevelHandler(self)
                     self.levelLabel.text = "Level: \(self.currentLevel.levelTracker)"
                     stop.memory = true
@@ -130,8 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let liveRemaining = self.currentPlayer.livesLeft()
             if liveRemaining > 0 {
                 self.livesRemaininglabel.text = "Lives: \(liveRemaining)"
-                self.currentPlayer.playerSprite.position = self.currentPlayer.defaultPlayerPosition
-                self.currentPlayer.playerDestinationPos = self.currentPlayer.defaultPlayerPosition
+                self.reconfigurePositionVariables()
             } else {
                 let gameOver = GameOver(size: self.size)
                 gameOver.scaleMode = .AspectFill
@@ -186,6 +190,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        checkIfPlayerTouched("explosion")
+        checkIfPlayerTouched("explosion", finishedNode: "finished")
     }
 }
