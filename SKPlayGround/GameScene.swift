@@ -95,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func killPlayerIfTouchNodeName(nodeName: String) {
+    func checkIfPlayerTouched(nodeName: String) {
         var playerDied = false
         enumerateChildNodesWithName("//*") {
             node, stop in
@@ -131,6 +131,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if liveRemaining > 0 {
                 self.livesRemaininglabel.text = "Lives: \(liveRemaining)"
                 self.currentPlayer.playerSprite.position = self.currentPlayer.defaultPlayerPosition
+                self.currentPlayer.playerDestinationPos = self.currentPlayer.defaultPlayerPosition
             } else {
                 let gameOver = GameOver(size: self.size)
                 gameOver.scaleMode = .AspectFill
@@ -152,9 +153,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if (currentPlayer.playerSprite.position.y < self.frame.height - currentMap.heightOfSquare) {
-            currentPlayer.moveUp(currentMap)
-        }
+//        if (currentPlayer.playerSprite.position.y < self.frame.height - currentMap.heightOfSquare) {
+//            currentPlayer.moveUp(currentMap)
+//        }
     }
     
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -185,6 +186,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
-        killPlayerIfTouchNodeName("explosion")
+        checkIfPlayerTouched("explosion")
     }
 }
