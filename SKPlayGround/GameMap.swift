@@ -26,41 +26,41 @@ class GameMap {
     
     init(currentScene : SKScene) {
         //Create, Configure, and Add mapContainer Node
-        mapContainer = SKSpriteNode(color: UIColor.blueColor(), size: CGSizeMake(currentScene.frame.width, currentScene.frame.width))
-        mapContainer.position = CGPointMake(currentScene.frame.width/2, currentScene.frame.height/2)
+        mapContainer = SKSpriteNode(color: UIColor.blue, size: CGSize(width: currentScene.frame.width, height: currentScene.frame.width))
+        mapContainer.position = CGPoint(x: currentScene.frame.width/2, y: currentScene.frame.height/2)
         
         //Create, Configure, and Add Individual Square Nodes
         widthOfSquare = mapContainer.frame.width/CGFloat(col)
         heightOfSquare = mapContainer.frame.height/CGFloat(row)
-        sizeOfSquare = CGSizeMake(widthOfSquare, heightOfSquare)
+        sizeOfSquare = CGSize(width: widthOfSquare, height: heightOfSquare)
         halfOfMapWidth = mapContainer.frame.width/2
         halfOfMapHeight = mapContainer.frame.height/2
         
         //Generates a grid of nodes with an explosion node overlayed
         for numHeight in 1...row {
             for numRow in 1...col {
-                let colorOfSquare = (numRow + numHeight) % 2 == 0 ? SKColor.grayColor() : SKColor.blackColor()
+                let colorOfSquare = (numRow + numHeight) % 2 == 0 ? SKColor.gray : SKColor.black
                 let singleSquare = SKSpriteNode(color: colorOfSquare, size: sizeOfSquare)
                 let xOffset = singleSquare.frame.width * CGFloat(numRow) - singleSquare.frame.width/2
                 let yOffset = singleSquare.frame.height * CGFloat(numHeight) - singleSquare.frame.height/2
                 singleSquare.name = "\(Array(alphabet.characters)[numRow - 1])\(String(numHeight))"
-                singleSquare.position = CGPointMake(-halfOfMapWidth + xOffset , -halfOfMapHeight + yOffset)
+                singleSquare.position = CGPoint(x: -halfOfMapWidth + xOffset , y: -halfOfMapHeight + yOffset)
                 singleSquare.texture = SKTexture(imageNamed: "tileSet")
-                singleSquare.physicsBody = SKPhysicsBody(rectangleOfSize: sizeOfSquare)
-                singleSquare.physicsBody?.dynamic = false
+                singleSquare.physicsBody = SKPhysicsBody(rectangleOf: sizeOfSquare)
+                singleSquare.physicsBody?.isDynamic = false
                 singleSquare.physicsBody?.categoryBitMask = GameScene.squareCategory
                 
                 arrayOfSquareNodes.append(singleSquare)
                 
                 let explosionNode = SKSpriteNode(imageNamed: "skull")//SKSpriteNode(color: SKColor.redColor(), size: sizeOfSquare)
                 explosionNode.alpha = 0
-                explosionNode.size = CGSizeMake(widthOfSquare*0.9, heightOfSquare*0.9)
+                explosionNode.size = CGSize(width: widthOfSquare*0.9, height: heightOfSquare*0.9)
                 //explosionNode.advanceSimulationTime(10)
                 explosionNode.zPosition = 2
                 explosionNode.name = "explosion"
-                explosionNode.hidden = true
-                explosionNode.physicsBody = SKPhysicsBody(rectangleOfSize: sizeOfSquare)
-                explosionNode.physicsBody?.dynamic = false
+                explosionNode.isHidden = true
+                explosionNode.physicsBody = SKPhysicsBody(rectangleOf: sizeOfSquare)
+                explosionNode.physicsBody?.isDynamic = false
                 explosionNode.physicsBody?.categoryBitMask = GameScene.explosionCategory
                 //singleSquare.alpha = 0.5
                 mapContainer.addChild(singleSquare)
@@ -71,12 +71,12 @@ class GameMap {
         }
     }
     
-    func squareNodeNamed(nodeName : String, isExplosion : Bool) -> SKSpriteNode! {
+    func squareNodeNamed(_ nodeName : String, isExplosion : Bool) -> SKSpriteNode! {
         if !isExplosion {
-            let squareNode = self.mapContainer.childNodeWithName(nodeName) as? SKSpriteNode
+            let squareNode = self.mapContainer.childNode(withName: nodeName) as? SKSpriteNode
             return squareNode
         } else {
-            let explosionNode = self.mapContainer.childNodeWithName(nodeName)?.childNodeWithName("explosion") as? SKSpriteNode
+            let explosionNode = self.mapContainer.childNode(withName: nodeName)?.childNode(withName: "explosion") as? SKSpriteNode
             return explosionNode
         }
     }

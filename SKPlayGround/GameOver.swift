@@ -13,16 +13,16 @@ class GameOver: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         
-        self.backgroundColor = SKColor.blackColor()
+        self.backgroundColor = SKColor.black
         let gameOverLabel = SKLabelNode(text: "Game Over")
-        gameOverLabel.color = SKColor.whiteColor()
+        gameOverLabel.color = SKColor.white
         gameOverLabel.fontSize = self.frame.width/8
-        gameOverLabel.position = CGPointMake(self.frame.width/2, self.frame.height/2)
+        gameOverLabel.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         
         let tapAnywhere = SKLabelNode(text: "tap anywhere to play again")
-        tapAnywhere.color = SKColor.whiteColor()
+        tapAnywhere.color = SKColor.white
         tapAnywhere.fontSize = self.frame.width/15
-        tapAnywhere.position = CGPointMake(self.frame.width/2, self.frame.height/2 - 50)
+        tapAnywhere.position = CGPoint(x: self.frame.width/2, y: self.frame.height/2 - 50)
         
         self.addChild(gameOverLabel)
         self.addChild(tapAnywhere)
@@ -32,12 +32,12 @@ class GameOver: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let scene = GameScene(fileNamed:"GameScene") {
             
             scene.size = self.size
             self.view?.presentScene(scene)
-            let newGameTransition = SKTransition.doorsOpenHorizontalWithDuration(2.0)
+            let newGameTransition = SKTransition.doorsOpenHorizontal(withDuration: 2.0)
             self.view?.presentScene(scene, transition: newGameTransition) //This transition is not working for some reason
         }
     }

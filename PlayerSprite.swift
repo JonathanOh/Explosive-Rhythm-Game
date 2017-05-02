@@ -10,12 +10,12 @@ import SpriteKit
 
 class PlayerSprite {
 
-    private var _playerSpeed : Double = 500
-    private var _playerSprite = SKSpriteNode(imageNamed: "circleTest")
-    private var _playerSize = CGSize(width: 20, height: 20)
-    private var _livesRemaining = 10
-    private var _defaultPlayerPosition = CGPointMake(0, 0)
-    private var _playerDestinationPos : CGPoint?
+    fileprivate var _playerSpeed : Double = 500
+    fileprivate var _playerSprite = SKSpriteNode(imageNamed: "circleTest")
+    fileprivate var _playerSize = CGSize(width: 20, height: 20)
+    fileprivate var _livesRemaining = 10
+    fileprivate var _defaultPlayerPosition = CGPoint(x: 0, y: 0)
+    fileprivate var _playerDestinationPos : CGPoint?
     
     var playerSpeed : Double {
         get {
@@ -76,28 +76,28 @@ class PlayerSprite {
         _playerSprite.physicsBody?.collisionBitMask = GameScene.finishLevelCategory
     }
     
-    func setPlayerPosition(parentFrame: CGRect, currentMap: GameMap) {
+    func setPlayerPosition(_ parentFrame: CGRect, currentMap: GameMap) {
         if currentMap.col % 2 == 1 && currentMap.row % 2 == 1 {
-            _playerSprite.position = CGPointMake(parentFrame.width/2, parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2))
+            _playerSprite.position = CGPoint(x: parentFrame.width/2, y: parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2))
         } else if currentMap.col % 2 == 0 && currentMap.row % 2 == 0 {
-            _playerSprite.position = CGPointMake((parentFrame.width/2 - currentMap.widthOfSquare/2), (parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2)))
+            _playerSprite.position = CGPoint(x: (parentFrame.width/2 - currentMap.widthOfSquare/2), y: (parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2)))
         } else if currentMap.col % 2 == 1 && currentMap.row % 2 == 0 {
-            _playerSprite.position = CGPointMake(parentFrame.width/2, parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2))
+            _playerSprite.position = CGPoint(x: parentFrame.width/2, y: parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2))
         } else {
-            _playerSprite.position = CGPointMake(parentFrame.width/2 - currentMap.widthOfSquare/2, parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2))
+            _playerSprite.position = CGPoint(x: parentFrame.width/2 - currentMap.widthOfSquare/2, y: parentFrame.height/2 - (currentMap.halfOfMapHeight + currentMap.heightOfSquare/2))
         }
         _defaultPlayerPosition = _playerSprite.position
         _playerDestinationPos = _playerSprite.position
     }
     
-    func updatePlayerPosition(currentScene: GameScene, touches: Set<UITouch>) {
-        if let location = touches.first?.locationInNode(currentScene) {
+    func updatePlayerPosition(_ currentScene: GameScene, touches: Set<UITouch>) {
+        if let location = touches.first?.location(in: currentScene) {
             let xDist = (self.playerSprite.position.x - location.x)
             let yDist = (self.playerSprite.position.y - location.y)
             let distanceOfPoints = sqrt(( xDist * xDist ) + ( yDist * yDist ))
             let dynamicDistance : Double = (Double(distanceOfPoints) / self.playerSpeed)
-            let actionMove = SKAction.moveTo(location, duration: dynamicDistance) //this may behave weird if playerSprite is blocked by walls
-            self.playerSprite.runAction(actionMove)
+            let actionMove = SKAction.move(to: location, duration: dynamicDistance) //this may behave weird if playerSprite is blocked by walls
+            self.playerSprite.run(actionMove)
         } else {
             print("No Location Found!")
         }
@@ -111,38 +111,38 @@ class PlayerSprite {
         }
     }
     
-    func configureWithNewPos(position: CGPoint) -> SKAction {
+    func configureWithNewPos(_ position: CGPoint) -> SKAction {
         _playerDestinationPos = position
-        let moveNodeAction = SKAction.moveTo(position, duration: 0.1)
+        let moveNodeAction = SKAction.move(to: position, duration: 0.1)
         return moveNodeAction
     }
     
-    func moveUp(currentMap : GameMap) {
+    func moveUp(_ currentMap : GameMap) {
         if self.isPlayerMoveable() {
-            let newPos = CGPointMake(self.playerSprite.position.x, self.playerSprite.position.y + currentMap.heightOfSquare)
+            let newPos = CGPoint(x: self.playerSprite.position.x, y: self.playerSprite.position.y + currentMap.heightOfSquare)
             let moveAction = configureWithNewPos(newPos)
-            self.playerSprite.runAction(moveAction)
+            self.playerSprite.run(moveAction)
         }
     }
-    func moveDown(currentMap : GameMap) {
+    func moveDown(_ currentMap : GameMap) {
         if self.isPlayerMoveable() {
-            let newPos = CGPointMake(self.playerSprite.position.x, self.playerSprite.position.y - currentMap.heightOfSquare)
+            let newPos = CGPoint(x: self.playerSprite.position.x, y: self.playerSprite.position.y - currentMap.heightOfSquare)
             let moveAction = configureWithNewPos(newPos)
-            self.playerSprite.runAction(moveAction)
+            self.playerSprite.run(moveAction)
         }
     }
-    func moveLeft(currentMap : GameMap) {
+    func moveLeft(_ currentMap : GameMap) {
         if self.isPlayerMoveable() {
-            let newPos = CGPointMake(self.playerSprite.position.x - currentMap.widthOfSquare, self.playerSprite.position.y)
+            let newPos = CGPoint(x: self.playerSprite.position.x - currentMap.widthOfSquare, y: self.playerSprite.position.y)
             let moveAction = configureWithNewPos(newPos)
-            self.playerSprite.runAction(moveAction)
+            self.playerSprite.run(moveAction)
         }
     }
-    func moveRight(currentMap : GameMap) {
+    func moveRight(_ currentMap : GameMap) {
         if self.isPlayerMoveable() {
-            let newPos = CGPointMake(self.playerSprite.position.x + currentMap.widthOfSquare, self.playerSprite.position.y)
+            let newPos = CGPoint(x: self.playerSprite.position.x + currentMap.widthOfSquare, y: self.playerSprite.position.y)
             let moveAction = configureWithNewPos(newPos)
-            self.playerSprite.runAction(moveAction)
+            self.playerSprite.run(moveAction)
         }
     }
     

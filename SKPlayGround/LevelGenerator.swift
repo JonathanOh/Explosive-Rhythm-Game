@@ -14,15 +14,15 @@ class LevelGenerator {
     let showNodeAction = SKAction.unhide()
     let explosionSound = SKAction.playSoundFileNamed("explosion.wav", waitForCompletion: false)
     //let showNodeAction = SKAction.group([showNode, explosionSound])
-    let durationOfDeathExplosion = SKAction.waitForDuration(0.1)
-    let waitHalfSecond = SKAction.waitForDuration(2.50)
+    let durationOfDeathExplosion = SKAction.wait(forDuration: 0.1)
+    let waitHalfSecond = SKAction.wait(forDuration: 2.50)
 
     var arrayOfSquareNodes = [SKSpriteNode]()
     var widthOfCurrentBoard : Int
     var lengthOfCurrentBoard : Int
     var explodeTextureArray = [SKTexture]()
     
-    private var _leveltracker : Int = 0
+    fileprivate var _leveltracker : Int = 0
     
     var levelTracker : Int {
         get {
@@ -56,15 +56,15 @@ class LevelGenerator {
         levelZero()
     }
     
-    func nextLevelHandler(currentScene: GameScene) {
-        currentScene.enumerateChildNodesWithName("//*") {
+    func nextLevelHandler(_ currentScene: GameScene) {
+        currentScene.enumerateChildNodes(withName: "//*") {
             node, stop in
             node.removeAllActions()
             if (node.name == "explosion") {
-                node.hidden = true
+                node.isHidden = true
             }
         }
-        _leveltracker++
+        _leveltracker += 1
         switch _leveltracker {
         case 1:
             levelOne()
@@ -89,50 +89,50 @@ class LevelGenerator {
         }
     }
     
-    func actionCreator(initialWait: NSTimeInterval, timeInterval: NSTimeInterval) -> SKAction {
-        let waitFor = SKAction.waitForDuration(timeInterval)
-        let initialWaitFor = SKAction.waitForDuration(initialWait)
+    func actionCreator(_ initialWait: TimeInterval, timeInterval: TimeInterval) -> SKAction {
+        let waitFor = SKAction.wait(forDuration: timeInterval)
+        let initialWaitFor = SKAction.wait(forDuration: initialWait)
         let arrayOfActions = SKAction.sequence([shouldHaveSound ? explosionSound:hideNodeAction,showNodeAction, durationOfDeathExplosion, hideNodeAction, waitFor])
-        let repeater = SKAction.repeatActionForever(arrayOfActions)
+        let repeater = SKAction.repeatForever(arrayOfActions)
         let finalAction = SKAction.sequence([initialWaitFor, repeater])
         shouldHaveSound = false
         return finalAction
     }
     
-    func animationActionCreator(initialWait: NSTimeInterval, timeInterval: NSTimeInterval) -> SKAction {
-        let waitFor = SKAction.waitForDuration(timeInterval)
-        let initialWaitFor = SKAction.waitForDuration(initialWait)
-        let explosionAnimation = SKAction.animateWithTextures(explodeTextureArray, timePerFrame: 0.06, resize: false, restore: true)
+    func animationActionCreator(_ initialWait: TimeInterval, timeInterval: TimeInterval) -> SKAction {
+        let waitFor = SKAction.wait(forDuration: timeInterval)
+        let initialWaitFor = SKAction.wait(forDuration: initialWait)
+        let explosionAnimation = SKAction.animate(with: explodeTextureArray, timePerFrame: 0.06, resize: false, restore: true)
         let arrayOfActions = SKAction.sequence([durationOfDeathExplosion, waitFor])
         let groupedActions = SKAction.group([explosionAnimation, arrayOfActions])
-        let repeater = SKAction.repeatActionForever(groupedActions)
+        let repeater = SKAction.repeatForever(groupedActions)
         let finalAction = SKAction.sequence([initialWaitFor, repeater])
         //shouldHaveSound = false
         return finalAction
     }
     
-    func waitStagger(staggerTime : NSTimeInterval, times: NSTimeInterval) -> NSTimeInterval {
+    func waitStagger(_ staggerTime : TimeInterval, times: TimeInterval) -> TimeInterval {
         let createdTime = staggerTime * times
         return createdTime
     }
     
-    func explodeRow(rowNum: Int, initialWait: NSTimeInterval, timeInterval: NSTimeInterval) {
+    func explodeRow(_ rowNum: Int, initialWait: TimeInterval, timeInterval: TimeInterval) {
         for action in (widthOfCurrentBoard * rowNum - widthOfCurrentBoard)..<(widthOfCurrentBoard * rowNum) {
             let explodeRowAction = actionCreator(initialWait, timeInterval: timeInterval)
             let explosionAnimation = animationActionCreator(initialWait, timeInterval: timeInterval)
-            arrayOfSquareNodes[action].runAction(explosionAnimation)
-            arrayOfSquareNodes[action].childNodeWithName("explosion")!.runAction(explodeRowAction)
+            arrayOfSquareNodes[action].run(explosionAnimation)
+            arrayOfSquareNodes[action].childNode(withName: "explosion")!.run(explodeRowAction)
             
         }
         shouldHaveSound = true
     }
-    func explodeCol(colNum: Int, initialWait: NSTimeInterval, timeInterval: NSTimeInterval) {
-        for var action = colNum - 1; action <= arrayOfSquareNodes.count - 1; action += 10 {
+    func explodeCol(_ colNum: Int, initialWait: TimeInterval, timeInterval: TimeInterval) {
+        
+        for action in stride(from: colNum - 1, to: arrayOfSquareNodes.count, by: 10) {
             let explodeColAction = actionCreator(initialWait, timeInterval: timeInterval)
             let explosionAnimation = animationActionCreator(initialWait, timeInterval: timeInterval)
-            arrayOfSquareNodes[action].runAction(explosionAnimation)
-            arrayOfSquareNodes[action].childNodeWithName("explosion")!.runAction(explodeColAction)
-            
+            arrayOfSquareNodes[action].run(explosionAnimation)
+            arrayOfSquareNodes[action].childNode(withName: "explosion")!.run(explodeColAction)
         }
         shouldHaveSound = true
     }
